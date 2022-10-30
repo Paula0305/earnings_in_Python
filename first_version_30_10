@@ -11,6 +11,8 @@ Python_tab = []
 multiplier = 1
 
 
+#funkcja sprawdzająca walutę w jakiej jest podane wynagrodzenie
+
 
 def what_currency(value):
     if(value == 'gbp'):
