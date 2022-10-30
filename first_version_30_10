@@ -11,7 +11,7 @@ Python_tab = []
 multiplier = 1
 
 
-#funkcja sprawdzająca walutę w jakiej jest podane wynagrodzenie
+# A function that checks the currency in which the salary is given
 
 
 def what_currency(value):
