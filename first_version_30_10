@@ -1,0 +1,49 @@
+import requests
+r = requests.get("https://justjoin.it/api/offers")
+dataset = r.json()
+highest_b2b = 0
+lowest_b2b = 0
+highest_per = 0
+lowest_per = 0
+counter_b2b = 0
+counter_per = 0
+Python_tab = []
+multiplier = 1
+
+
+
+def what_currency(value):
+    if(value == 'gbp'):
+        return 5.50
+    elif(value == 'usd'):
+        return 4.73
+    elif(value == 'eur'):
+        return 4.72
+    else:
+        return 1.0
+
+for offer in dataset:
+    for skill in offer['skills']:
+        if skill['name'] == 'Python':
+            Python_tab.append(offer)        
+for offer_Python in Python_tab:
+    for empt in offer_Python['employment_types']:
+
+        if empt['type'] == 'b2b':
+            if empt['salary'] != None:
+                multiplier = what_currency(empt['salary']['currency'])
+                highest_b2b += empt['salary']['to'] * multiplier
+                lowest_b2b += empt['salary']['from'] * multiplier
+                counter_b2b += 1            
+        elif empt['type'] == 'permanent':
+            if empt['salary'] != None:
+                multiplier = what_currency(empt['salary']['currency'])
+                highest_per += empt['salary']['to'] * multiplier
+                lowest_per += empt['salary']['from'] * multiplier
+                counter_per += 1
+
+                          
+print('Średnia najniższa kwota b2b: ', round(lowest_b2b / counter_b2b, 2), "zł") 
+print('Średnia najwyższa kwota b2b: ', round(highest_b2b / counter_b2b, 2), "zł") 
+print('Średnia najniższa kwota permanent: ', round(lowest_per / counter_per,2), "zł") 
+print('Średnia najwyższa kwota permanent: ', round(highest_per / counter_per, 2), "zł")
